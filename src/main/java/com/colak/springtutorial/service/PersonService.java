@@ -24,4 +24,9 @@ public class PersonService {
     public List<Person> getAllPersons() {
         return repository.findAll();
     }
+
+    @Transactional
+    public Person createPerson(Person person) {
+        return repository.save(person);
+    }
 }

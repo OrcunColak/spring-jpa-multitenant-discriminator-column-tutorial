@@ -6,6 +6,7 @@ import jakarta.persistence.EntityListeners;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.TenantId;
 
 
@@ -14,9 +15,12 @@ import org.hibernate.annotations.TenantId;
 @EntityListeners(TenantAwareEntityListener.class)
 
 @Getter
+@Setter
 public class Person implements TenantAware {
+
     @Id
     private Long id;
+
     private String name;
     private Integer age;
     private String email;

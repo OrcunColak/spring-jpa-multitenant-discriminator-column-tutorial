@@ -20,10 +20,14 @@ public class TenantFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
 
-        String privateTenant = httpServletRequest.getHeader(PRIVATE_TENANT_HEADER);
-        if (privateTenant != null) {
-            TenantContext.setCurrentTenant(privateTenant);
+        String tenantId = httpServletRequest.getHeader(PRIVATE_TENANT_HEADER);
+        if (tenantId != null && !tenantId.isEmpty()) {
+            TenantContext.setCurrentTenant(tenantId);
         }
-        filterChain.doFilter(servletRequest, servletResponse);
+        try {
+            filterChain.doFilter(servletRequest, servletResponse);
+        } finally {
+            TenantContext.clear();
+        }
     }
 }
